@@ -69,6 +69,10 @@ function commonsFileUrl(filename, fileFormat = null, width = 0) {
     return `${baseUrl}/${path}`;
 }
 
+function escape (str){
+return str.replace(/%20| /g,'_').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\'/g,'%27')
+}
+
 /* ****** */
 import { getAudioData, linearPath, polarPath } from 'https://cdn.skypack.dev/waveform-path';
 
@@ -83,7 +87,7 @@ async function AudioPath(filepath) {
     console.log("AudioPath(2) > Filepath", filepath)
     let filename = pathToFilename(filepath);
     let filepathMp3 = commonsFileUrl(filename,'mp3');
-    console.log("AudioPath(2) > FilepathMpt", {filepathMp3})
+    console.log("AudioPath(2) > FilepathMp3", {filepathMp3})
     let audioData = await getAudioData(filepathMp3);
     let pathdata = linearPath(audioData,{ 
         samples: 100, type: 'steps', top: 20
@@ -165,7 +169,7 @@ WHERE {
          var audioURL = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q14185_%28oci%29-Univ%C3%B2c64-Lobi%C3%A8r_de_Haut.wav/LL-Q14185_%28oci%29-Univ%C3%B2c64-Lobi%C3%A8r_de_Haut.wav.mp3'
           let filepath = village.audio;
           console.log("Filepath village.audio", filepath)
-          let filename = pathToFilename(filepath.replace('%20','_'));
+          let filename = pathToFilename(escape(filepath));
           let filepathMp3 = commonsFileUrl(filename,'mp3');
           console.log('ForEachO()',{filepathMp3});
 
@@ -195,7 +199,7 @@ WHERE {
     clearTimeout(refreshTimeout);
     refreshTimeout = setTimeout(() => {
       location.reload();
-    }, 100 * 1000); // 3 minutes in milliseconds
+    }, 20 * 1000); // 3 minutes in milliseconds
   }
 
   // Event listeners to reset the timer on user activity
@@ -203,10 +207,15 @@ WHERE {
   document.addEventListener('keypress', resetTimer);
  
  
+
  /* 
  
 Cons: https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/LL-Q117707514_(oci-whistled)-Univ%C3%B2c64-Piren%C3%A8us%20Atlantics.wav/LL-Q117707514_(oci-whistled)-Univ%C3%B2c64-Piren%C3%A8us%20Atlantics.wav.mp3
 Live: https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Piren%C3%A8us_Atlantics.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Piren%C3%A8us_Atlantics.wav.mp3?download
+
+Cons: https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a5/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier%20de%20Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier%20de%20Baish.wav.mp3
+Com: https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3
+
 */
 </script>
 
