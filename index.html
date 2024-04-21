@@ -16,9 +16,6 @@
   <!-- Leaflet JavaScript -->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
-<style>
-body { padding: 1em;}
-</style>
 <body>
 
 <div class="alert alert-success" role="alert">
@@ -177,7 +174,7 @@ WHERE {
           console.log('ForEachO()',{filepathMp3});
 
          document.querySelector('#villageAudio2').innerHTML = `
-          <wave-audio-path-player  id="villageAudio2-wave" src='${filepathMp3}' wave-width="200" wave-height="40" color="#55007f" wave-color="#55007f" wave-progress-color="#ff00ff" wave-slider="#ffaaff" wave-options='{"samples":40,"type":"steps","width":192,"height":40}'></wave-audio-path-player>`;
+          <wave-audio-path-player  id="villageAudio2-wave" src="${filepathMp3}" wave-width="200" wave-height="40" color="#55007f" wave-color="#55007f" wave-progress-color="#ff00ff" wave-slider="#ffaaff" wave-options='{"samples":40,"type":"steps","width":192,"height":40}'></wave-audio-path-player>`;
 
          console.log('audio')
         // document.querySelector('#villageAudio2 audio').src = village.audio;
@@ -202,7 +199,7 @@ WHERE {
     clearTimeout(refreshTimeout);
     refreshTimeout = setTimeout(() => {
       location.reload();
-    }, 20 * 1000); // 3 minutes in milliseconds
+    }, 100 * 1000); // 3 minutes in milliseconds
   }
 
   // Event listeners to reset the timer on user activity
@@ -219,6 +216,8 @@ Live: https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/LL-Q1177075
 Cons: https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a5/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier%20de%20Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier%20de%20Baish.wav.mp3
 Com: https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3
 
+cons: https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_(oci-whistled)-Univ%C3%B2c64-Art%C3%A9s_d
+https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3?download
 */
 </script>
 
