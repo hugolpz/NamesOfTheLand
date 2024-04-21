@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="oc">
+<head>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leaflet Map with Wikidata Villages</title>
+  <meta name="description" content="Toponymes d'Occitan sifflé">
+  <meta name="author" content="Hugo Lopez">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<div class="alert alert-success" role="alert">
+  <h3>Toponims en occitan siflat</h3>
+</div>
+<div id="map" style="height: 600px;"></div>
+<!-- 
+Soudwave Codepen : https://codepen.io/hugolpz/pen/eYoKaBj
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="villageModal" tabindex="-1" role="dialog" aria-labelledby="villageModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="villageModalLabel">Village Name</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <p id="villageName"></p> -->
+        <!-- <audio controls id="villageAudio">
+          Your browser does not support the audio element.
+        </audio> -->
+        <div id="villageAudio2"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" >
+/* ****** */
+function commonsFileUrl(filename, fileFormat = null, width = 0) {
+    const hashedFilename = CryptoJS.MD5(filename).toString();
+    const baseUrl = "https://upload.wikimedia.org/wikipedia/commons";
+    let path;
+    // Images
+    if (width !== 0) {
+        path = `thumb/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}/${width}px-${filename}`;
+        if (filename.slice(-4).toLowerCase() === '.svg') {
+            path += ".png";
+        }
+    } 
+    // Audios, videos & others
+    else if (fileFormat !== null) {
+        path = `transcoded/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}/${filename}.${fileFormat}`;
+    } else {
+        path = `${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}`;
+    }
+
+    return `${baseUrl}/${path}`;
+}
+
+/* ****** */
+import { getAudioData, linearPath, polarPath } from 'https://cdn.skypack.dev/waveform-path';
+
+function pathToFilename(filepath){
+ 	let filenameParts = filepath.split('/'),
+    	filename = decodeURI(filenameParts[filenameParts.length-1]) ;
+  console.log("pathToFilename(): ", { filepath, filename })
+return filename;
+}
+
+async function AudioPath(filepath) {
+    console.log("AudioPath(2) > Filepath", filepath)
+    let filename = pathToFilename(filepath);
+    let filepathMp3 = commonsFileUrl(filename,'mp3');
+    console.log("AudioPath(2) > FilepathMpt", {filepathMp3})
+    let audioData = await getAudioData(filepathMp3);
+    let pathdata = linearPath(audioData,{ 
+        samples: 100, type: 'steps', top: 20
+    });
+    var selected = document.querySelector("#villageAudio2").shadowRoot.querySelector("#slider #path1");
+    console.log('Selected: ', selected);
+    selected.setAttribute('d', pathdata); 
+}
+ 
+
+var credits = function() {
+$('.leaflet-control-attribution').replaceWith(`
+<div class="mw-kartographer-attribution" style="background:#FFFFFF77;">
+  Enregistrements Philippe Biu. Données et visualisation Hugo Lopez et Delphine Montagne. |
+	<a href="https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use" class="external">Wikimedia</a> |
+  <a href="https://www.openstreetmap.org/copyright" class="external">OpenStreetMap</a> |
+  <a href="https://leafletjs.com" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a>
+  </div>`) 
+};
+
+
+  // SPARQL query to fetch village data from Wikidata
+  var sparqlQuery = `
+#defaultView:Map
+# NOTE : Seul PAU Q132671 dispose des 3 prononciations. 
+SELECT ?id ?idLabel ?audio_ocw ?audio_ocwLabel ?coord ?image
+WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],oc,fr,en". }
+  
+  # Audios using CONTAINS or STRSTARTS
+  ?id wdt:P443 ?audio_ocw.
+  
+  FILTER(CONTAINS(STR(?audio_ocw), "LL-Q117707514")) # occitan Sifflé -Q117707514
+  
+  # OTHERS
+  OPTIONAL { ?id wdt:P1082 ?population . }
+  OPTIONAL { ?id wdt:P18 ?image }
+  ?id wdt:P625 ?coord . #coordonnées géo 
+}
+`;
+
+
+  // Execute SPARQL query against Wikidata endpoint
+  fetch('https://query.wikidata.org/sparql?query=' + encodeURIComponent(sparqlQuery) + '&format=json')
+    .then(response => response.json())
+    .then(data => {
+      var arr = data.results.bindings;
+      console.log(data)
+      var clean = arr.filter(item => item.coord.value.includes("Point("));
+      var villagesData = clean.map(item => ({
+        toponym: item.idLabel.value,
+        lon: parseFloat(item.coord.value.split(' ')[0].replace('Point\(','') ),
+        lat: parseFloat(item.coord.value.split(' ')[1].replace(')','') ),
+        audio:  item.audio_ocwLabel.value,
+        image:  item.image? item.image.value:''
+        // You can add audio URLs here if needed
+      }));
+
+      var map = L.map('map').setView([43.1, -0.3], 9);
+      var customIcon = L.divIcon({
+        className: 'custom-div-icon',
+        html: '<svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="#80008088" stroke="#400080FF" /></svg>',
+        iconSize: [12, 12],
+        iconAnchor: [6, 6],
+      });
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+
+			credits();
+      villagesData.forEach(function(village) {
+        var marker = L.marker([village.lat, village.lon], { icon: customIcon }).addTo(map);
+        marker.on('click', function() {
+          // Set modal content
+          document.getElementById('villageModalLabel').textContent = village.toponym;
+//         document.getElementById('villageAudio').src = village.audio;
+         console.log('root');
+         var audioURL = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q14185_%28oci%29-Univ%C3%B2c64-Lobi%C3%A8r_de_Haut.wav/LL-Q14185_%28oci%29-Univ%C3%B2c64-Lobi%C3%A8r_de_Haut.wav.mp3'
+          let filepath = village.audio;
+          console.log("Filepath village.audio", filepath)
+          let filename = pathToFilename(filepath.replace('%20','_'));
+          let filepathMp3 = commonsFileUrl(filename,'mp3');
+          console.log('ForEachO()',{filepathMp3});
+
+         document.querySelector('#villageAudio2').innerHTML = `
+          <wave-audio-path-player  id="villageAudio2-wave" src='${filepathMp3}' wave-width="200" wave-height="40" color="#55007f" wave-color="#55007f" wave-progress-color="#ff00ff" wave-slider="#ffaaff" wave-options='{"samples":40,"type":"steps","width":192,"height":40}'></wave-audio-path-player>`;
+
+         console.log('audio')
+        // document.querySelector('#villageAudio2 audio').src = village.audio;
+          // Show modal
+          $('#villageModal').modal('show');
+          AudioPath("https://upload.wikimedia.org/wikipedia/commons/transcoded/5/570/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Pau.wav")
+         // AudioPath("https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Piren%C3%A8us_Atlantics.wav");
+
+        });
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+    
+    
+    
+// PAGE REFRESH
+  let refreshTimeout;
+  // Function to reload the iframe after 3 minutes of inactivity
+  function resetTimer() {
+    clearTimeout(refreshTimeout);
+    refreshTimeout = setTimeout(() => {
+      location.reload();
+    }, 100 * 1000); // 3 minutes in milliseconds
+  }
+
+  // Event listeners to reset the timer on user activity
+  document.addEventListener('mousemove', resetTimer);
+  document.addEventListener('keypress', resetTimer);
+ 
+ 
+ /* 
+ 
+Cons: https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/LL-Q117707514_(oci-whistled)-Univ%C3%B2c64-Piren%C3%A8us%20Atlantics.wav/LL-Q117707514_(oci-whistled)-Univ%C3%B2c64-Piren%C3%A8us%20Atlantics.wav.mp3
+Live: https://upload.wikimedia.org/wikipedia/commons/transcoded/f/f7/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Piren%C3%A8us_Atlantics.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Piren%C3%A8us_Atlantics.wav.mp3?download
+*/
+</script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="module" src="https://jerosoler.github.io/wave-audio-path-player/wave-audio-path-player.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+
+
+</body>
+</html>
+  
