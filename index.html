@@ -105,7 +105,7 @@ async function AudioPath(filepath) {
 var credits = function() {
 $('.leaflet-control-attribution').replaceWith(`
 <div class="mw-kartographer-attribution" style="background:#FFFFFF99;">
-  Enregistrements Philippe Biu, traitement des données et conception Hugo Lopez et Delphine Montagne. |
+  Enregistrements Philippe Biu, conception et traitement des données Hugo Lopez et Delphine Montagne. |
 	<a href="https://foundation.wikimedia.org/wiki/Maps_Terms_of_Use" class="external">Wikimedia</a> |
   <a href="https://www.openstreetmap.org/copyright" class="external">OpenStreetMap</a> |
   <a href="https://leafletjs.com" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a>
@@ -161,6 +161,7 @@ WHERE {
       // https://leaflet-extras.github.io/leaflet-providers/preview/
       L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
         maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(map);
       L.control.scale({position: 'topright'}).addTo(map);
 
