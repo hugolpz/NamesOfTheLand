@@ -21,6 +21,10 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 - Delphine Montagne, Université de Pau et des Pays de l'Adour (UPPA) : alignement des données.
 - Philippe Biu, professeur d'occitan siffle : enregistrements.
 
+## See also
+- [Siffler le gascon, histoire d’une renaissance](https://www.anglet.fr/sorties/agendas/detail-dun-agenda/actualites/siffler-le-gascon-histoire-dune-renaissance/)
+- [Lingualibre.org](https://lingualibre.org)
+
 ## Licences
 - MIT Licence for code
 - CC-BY-SA-4.0 for contents
