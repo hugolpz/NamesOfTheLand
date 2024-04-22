@@ -158,8 +158,9 @@ WHERE {
         iconAnchor: [6, 6],
       });
 
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
+      // https://leaflet-extras.github.io/leaflet-providers/preview/
+      L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
+        maxZoom: 18,
       }).addTo(map);
       L.control.scale({position: 'topright'}).addTo(map);
 
