@@ -41,9 +41,9 @@ Soudwave Codepen : https://codepen.io/hugolpz/pen/eYoKaBj
       </div>
       <div class="modal-body">
         <!-- <p id="villageName"></p> -->
-        <!-- <audio controls id="villageAudio">
+        <audio controls id="villageAudio" style="display:none;">
           Your browser does not support the audio element.
-        </audio> -->
+        </audio>
         <div id="villageAudio2"></div>
       </div>
     </div>
@@ -158,12 +158,30 @@ WHERE {
         iconAnchor: [6, 6],
       });
 
-      // https://leaflet-extras.github.io/leaflet-providers/preview/
-      L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
-        maxZoom: 18,
+  /* LAYERS */
+  // https://leaflet-extras.github.io/leaflet-providers/preview/
+  // Add default street layer
+  var chLayer = L.tileLayer('https://tile.osm.ch/switzerland/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
-      L.control.scale({position: 'topright'}).addTo(map);
+        maxZoom: 18,
+  }).addTo(map);
+
+  // Add satellite layer (Google Satellite)
+  var sateliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+	attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+        maxZoom: 18
+  });
+
+  // Create layer control
+  var baseLayers = {
+    "Relief": chLayer,
+    "Satelite": sateliteLayer
+  };
+  L.control.layers(baseLayers).addTo(map);
+
+      
+  /* SCALE */
+      L.control.scale({position: 'topleft'}).addTo(map);
 
 			credits();
       villagesData.forEach(function(village) {
