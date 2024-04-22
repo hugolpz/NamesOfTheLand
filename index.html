@@ -157,6 +157,8 @@ WHERE {
         iconSize: [12, 12],
         iconAnchor: [6, 6],
       });
+  /* SCALE */
+  L.control.scale({position: 'topright'}).addTo(map);
 
   /* LAYERS */
   // https://leaflet-extras.github.io/leaflet-providers/preview/
@@ -178,10 +180,6 @@ WHERE {
     "Satelite": sateliteLayer
   };
   L.control.layers(baseLayers).addTo(map);
-
-      
-  /* SCALE */
-      L.control.scale({position: 'topleft'}).addTo(map);
 
 			credits();
       villagesData.forEach(function(village) {
