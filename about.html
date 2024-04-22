@@ -23,56 +23,123 @@
     .carriers-list li {
       margin-bottom: 20px;
     }
+
+/* holder and media-body is 1:4 in width */
+.media .media-image-holder {
+    padding: 0 1rem;
+    flex: 1;
+    
+    /* in order to center the image */
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.media .media-body {
+    flex: 6;
+}
+
+  .media img { 
+        height: 72px;
+        width: 72px;
+    }
   </style>
 </head>
 <body>
 
-<div class="container mt-5">
-  <div class="row">
-    <div class="col-md-8 mx-auto">
-      <h2 class="text-center mb-4">Toponymes en Occitan Sifflé</h2>
-      <div class="description">
-        <h3>Description</h3>
-        <p>Cette carte vous propose d'entendre les toponymes en occitan sifflé, comme ils pouvaient résonner entre interlocuteurs et interlocutrices de la vallée. En redonnant la voix à une pratique ancienne disparue dans les années 80s, elle met en valeur le patrimoine culturel immatériel du territoire. Son originalité ? Toutes les données sont en licence libre ! Ce sont cinq projets libres et collaboratifs (OpenStreetMap, Lingua Libre, Wikipédia, Wikidata, Commons), réalisés par des milliers de bénévoles, qui permettent de vous présenter cette carte. Nous y avons également contribué lors de sa conception. A votre tour d'y participer !</p>
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-8 mx-auto mt-4">
+            <h2 class="text-center mb-4">Toponymes en Occitan Sifflé</h2>
+            <div>
+              <h3>Description</h3>
+              <p>Cette carte vous propose d'entendre les toponymes en occitan sifflé, comme ils pouvaient résonner entre interlocuteurs et interlocutrices de la vallée. En redonnant la voix à une pratique ancienne disparue dans les années 80s, elle met en valeur le patrimoine culturel immatériel du territoire. Son originalité ? Toutes les données sont en licence libre ! Ce sont cinq projets libres et collaboratifs (OpenStreetMap, Lingua Libre, Wikipédia, Wikidata, Commons), réalisés par des milliers de bénévoles, qui permettent de vous présenter cette carte. Nous y avons également contribué lors de sa conception. A votre tour d'y participer !</p>
+            </div>
+          </div>
+      
+        <div class="col-md-8 mx-auto mt-4">
+            <h3 class="mt-6">Projets impliqués</h3>
+
+            <div class="media">
+            
+                <div class="media-image-holder">
+                <img srcNoText="https://upload.wikimedia.org/wikipedia/commons/5/55/Lingualibre-logo-no-text.svg" src="https://upload.wikimedia.org/wikipedia/commons/1/13/Lingualibre-logo-square.png" class="mr-3 rounded float-left" alt="Project Logo Placeholder" />
+                </div>
+                <div class="media-body">
+                <h5 class="mt-0">Donnez votre voix : Lingua libre</h5>
+                Enregistrez sur <a href="https://lingualibre.org" target="_blank">Lingualibre.org</a>
+                </div>
+                <div class="media-image-holder">
+                <img src="./img/qr-lingualibre.org.svg" class="ml-3 rounded float-right " alt="Project Logo Placeholder" />
+                </div>
+            </div><br>
+            
+            <div class="media">
+                <div class="media-image-holder">
+                <img srcNoText="https://upload.wikimedia.org/wikipedia/commons/4/4a/Commons-logo.svg" src="https://upload.wikimedia.org/wikipedia/commons/4/41/Commons-logo-en.svg" class="mr-3 rounded float-left" alt="Project Logo Placeholder" />
+                </div>
+                <div class="media-body">
+                <h5 class="mt-0">Partager vos fichiers éducatifs : Wikimedia Commons</h5>
+                Téléverser sur <a href="https://lingualibre.org" target="_blank">Commons.wikimedia.org</a>
+                </div>
+                <div class="media-image-holder">
+                <img src="./img/qr-commons.wikimedia.org.svg" class="ml-3 rounded float-right " alt="Project Logo Placeholder" />
+                </div>
+            </div><br>
+            
+            <div class="media">
+                <div class="media-image-holder">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/d1/Wikipedia-logo-v2-fr.svg" class="mr-3 rounded float-left" alt="Project Logo Placeholder">
+                </div>
+                <div class="media-body">
+                <h5 class="mt-0">Partagez vos connaissances : Wikipédia</h5>
+                Contribuez sur <a href="https://fr.wikipedia.org" target="_blank">fr.wikipedia.org</a>
+                </div>
+                <div class="media-image-holder">
+                <img src="./img/qr-fr-wikipedia.org.svg" class="ml-3 rounded float-right" alt="Project Logo Placeholder">
+                </div>
+            </div><br>
+
+            <div class="media">
+                <div class="media-image-holder">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Openstreetmap_logo.svg" class="mr-3 rounded float-left" alt="Project Logo Placeholder">
+                </div>
+                <div class="media-body">
+                <h5 class="mt-0">Cartographiez près de chez vous : OpenStreetMap</h5>
+                Documentez votre terrotoire sur <a href="https://openstreetmap.org" target="_blank">openstreetmap.org</a>
+                </div>
+                <div class="media-image-holder">
+                <img src="./img/qr-openstreetmap.org.svg" class="ml-3 rounded float-right" alt="Project Logo Placeholder">
+                </div>
+            </div><br>
+
+            <div class="media">
+                <div class="media-image-holder">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/ae/Github-desktop-logo-symbol.svg" class="mr-3 rounded float-right " alt="Project Logo Placeholder">
+                </div>
+                <div class="media-body">
+                <h5 class="mt-0">Bricollez le code : Github</h5>
+                Suggérez une modification <a href="https://github.com/hugolpz/NamesOfTheLand/issues" target="_blank">github.com</a>
+                </div>
+                <div class="media-image-holder">
+                <img src="./img/qr-github.com.svg" class="ml-3 rounded float-right" alt="Project Logo Placeholder">
+                </div>
+            </div>
+
+        </div>
+          
+      
+          <div class="col-md-8 mx-auto mt-4">
+            <h3>Porteurs</h3>
+            <ul class="carriers-list">
+              <li>Philipe Biu est professeur d'occitan sifflé et président de l'association « Lo siular d’Aas », visant à faire revivre cette pratique dans son territoire.</li>
+              <li>Hugo Lopez est développeur web et wikimédien en résidence à l'URFIST Occitanie, Université de Toulouse. Il est investi depuis 10 ans dans Lingua libre, en soutiens aux langues minoritaires.</li>
+              <li>Delphine Montagne est cartographe à l'université de Pau. Elle contribue aux projets OpenStreetMap et Wikipédia.</li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <h3>Projets impliqués</h3>
-      <div class="media">
-        <img src="https://via.placeholder.com/64" class="mr-3" alt="Project Logo Placeholder">
-        <div class="media-body">
-          <h5 class="mt-0">Donnez votre voix : Lingua libre</h5>
-          Enregistrez sur <a href="https://lingualibre.org" target="_blank">Lingualibre.org</a>
-        </div>
-      </div><br>
-      <div class="media">
-        <img src="https://via.placeholder.com/64" class="mr-3" alt="Project Logo Placeholder">
-        <div class="media-body">
-          <h5 class="mt-0">Partagez vos connaissances : Wikipédia</h5>
-          Contribuez sur <a href="https://fr.wikipedia.org" target="_blank">fr.wikipedia.org</a>
-        </div>
-      </div><br>
-      <div class="media">
-        <img src="https://via.placeholder.com/64" class="mr-3" alt="Project Logo Placeholder">
-        <div class="media-body">
-          <h5 class="mt-0">Cartographiez près de chez vous : OpenStreetMap</h5>
-          Documentez votre terrotoire sur <a href="https://openstreetmap.org" target="_blank">openstreetmap.org</a>
-        </div>
-      </div><br>
-      <div class="media">
-        <img src="https://via.placeholder.com/64" class="mr-3" alt="Project Logo Placeholder">
-        <div class="media-body">
-          <h5 class="mt-0">Bricollez le code : Github</h5>
-          Suggérez une modification <a href="https://github.com/hugolpz/NamesOfTheLand" target="_blank">github.com</a>
-        </div>
-      </div>
-      <h3>Porteurs</h3>
-      <ul class="carriers-list">
-        <li>Philipe Biu est professeur d'occitan sifflé et président de l'association « Lo siular d’Aas », visant à faire revivre cette pratique dans son territoire.</li>
-        <li>Hugo Lopez est développeur web et wikimédien en résidence à l'URFIST de Toulouse. Il est investi depuis 10 ans dans Lingua libre, en soutiens aux langues minoritaires.</li>
-        <li>Delphine Montagne est cartographe à l'université de Pau. Elle contribue aux projets OpenStreetMap et Wikipédia.</li>
-      </ul>
-    </div>
-  </div>
-</div>
 
 <!-- Bootstrap JS and jQuery (required for Bootstrap) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
