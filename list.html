@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Audio List</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+  <div class="alert alert-success" role="alert">
+  <h3>Liste audio</h3>
+  </div>
+  <ul id="audio-list" class="list-group">
+    <!-- Audio items will be dynamically added here -->
+  </ul>
+</div>
+
+<!-- Bootstrap JS and jQuery (required for Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
+
+<script>
+/* ****** */
+function commonsFileUrl(filename, fileFormat = null, width = 0) {
+    const hashedFilename = CryptoJS.MD5(filename).toString();
+    const baseUrl = "https://upload.wikimedia.org/wikipedia/commons";
+    let path;
+    // Images
+    if (width !== 0) {
+        path = `thumb/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}/${width}px-${filename}`;
+        if (filename.slice(-4).toLowerCase() === '.svg') {
+            path += ".png";
+        }
+    } 
+    // Audios, videos & others
+    else if (fileFormat !== null) {
+        path = `transcoded/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}/${filename}.${fileFormat}`;
+    } else {
+        path = `${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}`;
+    }
+
+    return `${baseUrl}/${path}`;
+}
+
+function pathToFilename(filepath){
+ 	let filenameParts = filepath.split('/'),
+    	filename = decodeURI(filenameParts[filenameParts.length-1]) ;
+  console.log("pathToFilename(): ", { filepath, filename })
+return filename;
+}
+
+function escape (str){
+return str.replace(/%20| /g,'_').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\'/g,'%27')
+}
+var data = [{
+    toponym: 'Artés d\'Anson',
+    audio:'',
+    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3'
+  },
+  {
+    toponym: 'Lobier de Baish',
+    audio:'',
+    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3'
+  },
+  {
+    toponym: 'Artés d\'Anson',
+    audio:'',
+    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3'
+  },
+  {
+    toponym: 'Lobier de Baish',
+    audio:'',
+    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3'
+  },
+];
+
+
+  // SPARQL query to fetch village data from Wikidata
+  var sparqlQuery = `
+#defaultView:Map
+# NOTE : Seul PAU Q132671 dispose des 3 prononciations. 
+SELECT ?id ?idLabel ?audio_ocw ?audio_ocwLabel ?coord ?image
+WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],oc,fr,en". }
+  
+  # Audios using CONTAINS or STRSTARTS
+  ?id wdt:P443 ?audio_ocw.
+  
+  FILTER(CONTAINS(STR(?audio_ocw), "LL-Q117707514")) # occitan Sifflé -Q117707514
+  
+  # OTHERS
+  OPTIONAL { ?id wdt:P1082 ?population . }
+  OPTIONAL { ?id wdt:P18 ?image }
+  ?id wdt:P625 ?coord . #coordonnées géo 
+}
+`;
+var listItemTemplate = function(item) { 
+// Bootstrap 4 template :
+// See : 
+return `<li  id="${item.toponym.replace(/[ ']/g,'_')}" class="list-group-item align-items-start">
+  <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1 audio-title">${item.toponym}</h5>
+     <!-- <small class="text-muted">(fr: ${item.toponymFr})</small> -->
+    </div>
+    <!-- <audio controls src="${item.fullurl}"></audio> -->
+    <wave-audio-path-player src="${item.fullurl}" wave-width="200" wave-height="40" color="#55007f" wave-color="#55007f" wave-progress-color="#ff00ff" wave-slider="#ffaaff" wave-options='{"samples":40,"type":"steps","width":192,"height":40}'></wave-audio-path-player>
+  </li>`
+  };
+
+  // Execute SPARQL query against Wikidata endpoint
+  fetch('https://query.wikidata.org/sparql?query=' + encodeURIComponent(sparqlQuery) + '&format=json')
+    .then(response => response.json())
+    .then(data => {
+      var arr = data.results.bindings;
+      console.log(data)
+      var clean = arr.filter(item => item.coord.value.includes("Point("));
+      var villagesData = clean.map(item => ({
+        toponym: item.idLabel.value,
+        toponymFr: item.idLabel.value,
+        audio:  item.audio_ocwLabel.value,
+        fullurl: commonsFileUrl(pathToFilename(escape(item.audio_ocwLabel.value)),'mp3')
+      }));
+
+      villagesData.forEach(function(item) {
+        console.log({ item} )
+        let listItemHTML = listItemTemplate(item) ;
+        console.log(listItemHTML)
+        document.getElementById('audio-list').insertAdjacentHTML('beforeend', listItemHTML );
+      
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+
+</script>
+
+    <script type="module" src="https://jerosoler.github.io/wave-audio-path-player/wave-audio-path-player.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+
+</body>
+</html>
