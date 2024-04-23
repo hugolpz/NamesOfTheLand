@@ -11,7 +11,7 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 ├── list.html : interactive multimedia list
 ├── about.html : about and credit page
 ├── img
-├── doc (TBA) 
+├── doc 
 ├── css (TBA)
 └── js (TBA)
 ```
