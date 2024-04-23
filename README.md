@@ -20,6 +20,7 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 - Hugo Lopez, URFIST Occitanie, Université de Toulouse (UT) : project management, training, SPARQL, conception, coding.
 - Delphine Montagne, Université de Pau et des Pays de l'Adour (UPPA) : data alignement, communication.
 - Philippe Biu, professor of Occitan whistled : recordings, exhibition.
+See also [./about.html](https://hugolpz.github.io/NamesOfTheLand/about.html)
 
 ## See also
 - [Lingualibre.org](https://lingualibre.org)
