@@ -17,9 +17,9 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 ```
 
 ## Authors
-- Hugo Lopez, URFIST Occitanie, Université de Toulouse (UT) : développements.
-- Delphine Montagne, Université de Pau et des Pays de l'Adour (UPPA) : alignement des données.
-- Philippe Biu, professeur d'occitan siffle : enregistrements.
+- Hugo Lopez, URFIST Occitanie, Université de Toulouse (UT) : project management, training, SPARQL, conception, coding.
+- Delphine Montagne, Université de Pau et des Pays de l'Adour (UPPA) : data alignement, communication.
+- Philippe Biu, professor of Occitan whistled : recordings, exhibition.
 
 ## See also
 - [Lingualibre.org](https://lingualibre.org)
