@@ -22,9 +22,14 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 - Philippe Biu, professeur d'occitan siffle : enregistrements.
 
 ## See also
-- [Siffler le gascon, histoire d’une renaissance](https://www.anglet.fr/sorties/agendas/detail-dun-agenda/actualites/siffler-le-gascon-histoire-dune-renaissance/)
 - [Lingualibre.org](https://lingualibre.org)
+
+## Media
+- [Siffler le gascon, histoire d’une renaissance](https://www.anglet.fr/sorties/agendas/detail-dun-agenda/actualites/siffler-le-gascon-histoire-dune-renaissance/)
+- [Shiular lo gascon](https://www.calameo.com/villeanglet/read/0002051056b581caa133c)
+- [Wikimedia Commons Occitan Whistle](https://commons.wikimedia.org/wiki/Category:Lingua_Libre_pronunciation-other_(Q117707514))
 
 ## Licences
 - MIT Licence for code
 - CC-BY-SA-4.0 for contents
+- `/doc/*` contains copyrighted materials
