@@ -10,10 +10,10 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 ├── index.html : interactive multimedia map
 ├── list.html : interactive multimedia list
 ├── about.html : about and credit page
-├── img
-├── doc 
-├── css (TBA)
-└── js (TBA)
+├── img/ : images used by the webpages
+├── doc/ : documentations and copyrighted images from media coverages
+├── css/ (TBA)
+└── js/ (TBA)
 ```
 
 ## Authors
