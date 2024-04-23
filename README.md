@@ -12,8 +12,8 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 ├── about.html : about and credit page
 ├── img/ : images used by the webpages
 ├── doc/ : documentations and copyrighted images from media coverages
-├── css/ (TBA)
-└── js/ (TBA)
+├── css/ : styles (not used yet)
+└── js/ : behaviors (no used yet)
 ```
 
 ## Authors
