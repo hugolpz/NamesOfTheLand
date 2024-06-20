@@ -16,6 +16,9 @@ This project has been initiated by Gascon, a subgroup of the Occitan people. A l
 └── js/ : behaviors (no used yet)
 ```
 
+## Visuals
+<img src="doc/NamesOfTheLand-List.png" style="height:150px;"/> <img src="doc/NamesOfTheLands-Expo-App.png" style="height:150px;"/> <img src="doc/NamesOfTheLand-map.png" style="height:150px;"/>
+
 ## Authors
 - Hugo Lopez, URFIST Occitanie, Université de Toulouse (UT) : project management, training, SPARQL, conception, coding.
 - Delphine Montagne, Université de Pau et des Pays de l'Adour (UPPA) : data alignement, communication.
