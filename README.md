@@ -35,6 +35,42 @@ See also [./about.html](https://hugolpz.github.io/NamesOfTheLand/about.html)
 
 <img src="doc/NamesOfTheLands-Expo-App-Intro.png" style="height:150px;"/> <img src="doc/Ville d'Anglet, site officiel - Siffler le gascon, histoire d’une renaissance.png" style="height:150px;"/> <img src="./doc/2024_Shiular_lo_gascon.png" style="height:150px;"/>
 
+## Replication
+### Requirements
+Skills :
+- Wikidata / SPARQL (basic)
+- Lingualibre recording
+- Github (basic)
+- Text editing
+
+Variables :
+- ISO of your labels language (ex: `oc`)
+- Wikidata Qid of your language (ex: `Occitan whistled from Aas (Q117707514)`)
+- Wikidata Qid of your target administrative area (ex: `Pyrénées-Atlantiques (Q12703)`)
+- Wikimedia Commons prefix for your language (ex: `LL-Q117707514`)
+
+### Recording toponyms
+1. Open [Wikidata Query service](https://query.wikidata.org/), input the following SPARQL, change language and administrative area's Qids.
+```sparql
+# SPARQL QUERY HERE
+#Cats
+SELECT ?id ?idLabel (?idLabel as ?label)
+WHERE {
+  ?id wdt:P31 wd:Q146. # Must be a cat
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } # Helps get the label in your language, if not, then en language
+}
+```
+2. Run query : results appears > Click "Link" > Right-click on "SPARQL endpoint" : copy link address
+3. Open [Lingualibre studio](https://lingualibre.org/wiki/Special:RecordWizard) > Step 3 : click "External tools" > paste the link adress.
+4. Record these labels, publish them to Wikimedia Commons.
+
+Within a week or two, these toponyms recordings will be added to their Wikidata concepts.
+
+### Hack the map
+1. Open `index.html`
+  1. Replace `oc` and `ocw` by your ISO
+  2. Replace `Q117707514` by your language Wikidata Qid
+
 ## Licences
 - MIT Licence for code
 - CC-BY-SA-4.0 for contents
