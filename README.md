@@ -49,6 +49,9 @@ Variables :
 - Wikidata Qid of your language (ex: `Occitan whistled from Aas (Q117707514)`)
 - Wikidata Qid of your target administrative area (ex: `Pyrénées-Atlantiques (Q12703)`)
 - Wikimedia Commons prefix for your language (ex: `LL-Q117707514`)
+- Latitude of OSM map view's center (ex: `44.2`)
+- Longitude of OSM map view's center (ex: `-0.3`)
+- Zoom altitude of OSM map view (ex: `11`)
 
 ### Recording toponyms
 1. Open [Wikidata Query service](https://query.wikidata.org/), input the following SPARQL
