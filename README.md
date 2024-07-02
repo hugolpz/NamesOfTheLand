@@ -32,7 +32,7 @@ See also [./about.html](https://hugolpz.github.io/NamesOfTheLand/about.html)
 - [Siffler le gascon, histoire d’une renaissance](https://www.anglet.fr/sorties/agendas/detail-dun-agenda/actualites/siffler-le-gascon-histoire-dune-renaissance/)
 - [Shiular lo gascon](https://www.calameo.com/villeanglet/read/0002051056b581caa133c)
 - [Wikimedia Commons Occitan Whistle](https://commons.wikimedia.org/wiki/Category:Lingua_Libre_pronunciation-other_(Q117707514))
-- Hugo Pierre Lopez, Delphine Montagne. _Adiu ! Quand l'union des communs fait la force du patrimoine immatériel_. State of the Map France 2024, OpenStreetMap France, Jun 2024, Lyon, France. [⟨hal-04628915⟩](https://hal.science/hal-04628915) [⟨pretalx⟩]([https://hal.science/hal-04628915](https://pretalx.com/sotm-fr-2024/talk/CL7UFN/)
+- Hugo Pierre Lopez, Delphine Montagne. _Adiu ! Quand l'union des communs fait la force du patrimoine immatériel_. State of the Map France 2024, OpenStreetMap France, Jun 2024, Lyon, France. [⟨hal-04628915⟩](https://hal.science/hal-04628915) [⟨pretalx⟩](https://pretalx.com/sotm-fr-2024/talk/CL7UFN/)
 
 <img src="doc/NamesOfTheLands-Expo-App-Intro.png" style="height:150px;"/> <img src="doc/Ville d'Anglet, site officiel - Siffler le gascon, histoire d’une renaissance.png" style="height:150px;"/> <img src="./doc/2024_Shiular_lo_gascon.png" style="height:150px;"/>
 
