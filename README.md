@@ -50,14 +50,32 @@ Variables :
 - Wikimedia Commons prefix for your language (ex: `LL-Q117707514`)
 
 ### Recording toponyms
-1. Open [Wikidata Query service](https://query.wikidata.org/), input the following SPARQL, change language and administrative area's Qids.
+1. Open [Wikidata Query service](https://query.wikidata.org/), input the following SPARQL
+  - replace `oc` by your language ISO.
+  - replace `Q12703` by your administrative area of interest.
 ```sparql
-# SPARQL QUERY HERE
-#Cats
-SELECT ?id ?idLabel (?idLabel as ?label)
+#defaultView:Map
+SELECT DISTINCT ?id ?label ?label_fr ?coord ?population
 WHERE {
-  ?id wdt:P31 wd:Q146. # Must be a cat
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". } # Helps get the label in your language, if not, then en language
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],oc,fr,en". }
+  VALUES ?humanSettlementTypes {
+    wd:Q515        # city
+    wd:Q3957       # town 
+    # wd:Q484170   # French communes
+    wd:Q486972     # human settlement
+    wd:Q618123     # geographic feature
+    wd:Q3257686    # locality
+    wd:Q123964505  # populated item
+  }
+  VALUES ?administrativeArea {
+    wd:Q12703 # Pyrennees-Atlantic
+  }
+  ?id (wdt:P31/(wdt:P279*)) ?humanSettlementTypes ; 
+    wdt:P131 ?administrativeArea .
+  ?id rdfs:label ?label . FILTER(LANG(?label) = "oc")
+  ?id rdfs:label ?label_fr . FILTER(LANG(?label_fr) = "fr")
+  ?id wdt:P625 ?coord . # geo coordinates
+  OPTIONAL { ?id wdt:P1082 ?population . }
 }
 ```
 2. Run query : results appears > Click "Link" > Right-click on "SPARQL endpoint" : copy link address
