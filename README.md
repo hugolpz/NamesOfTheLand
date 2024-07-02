@@ -87,7 +87,7 @@ Within a week or two, these toponyms recordings will be added to their Wikidata 
 ### Hack the map
 1. Open `index.html`
   1. Replace `oc` and `ocw` by your ISO
-  2. Replace `Q117707514` by your language Wikidata Qid
+  2. Replace `Q117707514` by your language ISO or Wikidata Qid, depending on your [audio filenames prefix within Wikimedia Commons LinguaLibre's categories](https://commons.wikimedia.org/wiki/Category:Lingua_Libre_pronunciation)
 
 ## Licences
 - MIT Licence for code
