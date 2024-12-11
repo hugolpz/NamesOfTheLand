@@ -57,8 +57,21 @@ Variables :
 1. Open [Wikidata Query service](https://query.wikidata.org/), input the following SPARQL
   - replace `oc` by your language ISO.
   - replace `Q12703` by your administrative area of interest.
+
+```sparql
+#title: List of commune names within Pyrénnées Atlantic, simplest query for LinguaLibre recording phase
+SELECT ?id ?label
+WHERE {
+  ?id wdt:P31 wd:Q484170;  # item is `commune de france` (Q484170)
+      wdt:P131 wd:Q12703.  # item is `located in administrative entity` (P131) of `pyrennées atlantiques` (Q12703)
+  ?id rdfs:label ?label.   # fetch labels
+  FILTER(lang(?label) = "oc") # keep Occitan labels
+}
+```
+
 ```sparql
 #defaultView:Map
+#title: List of commune names within Pyrénnées Atlantic, richest query with geocoordinates and population for the dataviz
 SELECT DISTINCT ?id ?label ?label_fr ?coord ?population
 WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],oc,fr,en". }
