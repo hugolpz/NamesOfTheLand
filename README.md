@@ -105,7 +105,7 @@ Within a week or two, these toponyms recordings will be added to their Wikidata 
 ### Hack the map
 1. Ensure you recorded your toponyms via Lingua Libre. (Check your audios [in Wikimedia Commons LinguaLibre's categories](https://commons.wikimedia.org/wiki/Category:Lingua_Libre_pronunciation))
 2. Wait 2~3 weeks so the audios spread on wikidata items
-3. Open [index.html](./index.html?lat=44.2&lon=-0.3&zoom=9&iso2local=oc&iso2macro=fr&languageQid=Q117707514&areaQid=Q12703)
+3. Open [index.html](./index.html?lat=43.2&lon=-0.3&zoom=9&iso2local=oc&iso2macro=fr&languageQid=Q117707514&areaQid=Q12703)
 4. Update the parameters to fit your case
 
 ## Licences
