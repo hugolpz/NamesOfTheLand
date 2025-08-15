@@ -66,44 +66,44 @@ function getUrlParameter(name) {
 }
 
 function commonsFileUrl(filename, fileFormat = null, width = 0) {
-    const hashedFilename = CryptoJS.MD5(filename).toString();
+    console.log("commonsFileUrl(filename): ", { filename });
+    // Ensure filename is properly encoded for MD5 hashing
+    const normalizedFilename = filename;
+    const hashedFilename = CryptoJS.MD5(normalizedFilename).toString();
     const baseUrl = "https://upload.wikimedia.org/wikipedia/commons";
     let path;
     // Images
     if (width !== 0) {
-        path = `thumb/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}/${width}px-${filename}`;
+        path = `thumb/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${normalizedFilename}/${width}px-${normalizedFilename}`;
         if (filename.slice(-4).toLowerCase() === '.svg') {
             path += ".png";
         }
     } 
     // Audios, videos & others
     else if (fileFormat !== null) {
-        path = `transcoded/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}/${filename}.${fileFormat}`;
+        path = `transcoded/${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${normalizedFilename}/${normalizedFilename}.${fileFormat}`;
     } else {
-        path = `${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${filename}`;
+        path = `${hashedFilename[0]}/${hashedFilename.slice(0, 2)}/${normalizedFilename}`;
     }
 
     return `${baseUrl}/${path}`;
 }
 
-function escape (str){
-return str.replace(/%20| /g,'_').replace(/\(/g,'%28').replace(/\)/g,'%29').replace(/\'/g,'%27')
+function pathToFilename(filepath){
+ 	let filenameParts = filepath.split('/'),
+    	filenameURI = filenameParts[filenameParts.length-1],
+      filename = decodeURI(filenameURI).replace(/ /g,'_').replace(/%2C/g, ',');
+  console.log("pathToFilename(): ", { filepath, filenameURI, filename })
+  // Keep commas as-is for proper MD5 hashing, replace spaces with underscores
+  return filename;
 }
 
 /* ****** */
 import { getAudioData, linearPath, polarPath } from 'https://cdn.skypack.dev/waveform-path';
 
-function pathToFilename(filepath){
- 	let filenameParts = filepath.split('/'),
-    	filename = decodeURI(filenameParts[filenameParts.length-1]) ;
-  console.log("pathToFilename(): ", { filepath, filename })
-return filename;
-}
-
 async function AudioPath(filepath) {
     console.log("AudioPath(2) > Filepath", filepath)
-    let filename = pathToFilename(filepath);
-    let filepathMp3 = commonsFileUrl(filename,'mp3');
+    let filepathMp3 = commonsFileUrl(pathToFilename(filepath),'mp3');
     console.log("AudioPath(2) > FilepathMp3", {filepathMp3})
     let audioData = await getAudioData(filepathMp3);
     let pathdata = linearPath(audioData,{ 
@@ -128,6 +128,12 @@ $('.leaflet-control-attribution').replaceWith(`
 
 // Get languageQid from URL parameter, default to Q117707514
 const languageQid = getUrlParameter('languageQid') || 'Q117707514';
+const lat = getUrlParameter('lat') || '42.9'; // for Pyrennees atlantiques
+const lon = getUrlParameter('lon') || '-0.3'; // for Pyrennees atlantiques
+const zoom= getUrlParameter('zoom') || '9'; // for Pyrennees atlantiques
+const iso2local = getUrlParameter('iso2') || 'oc';
+const iso2macro = getUrlParameter('iso2') || 'fr';
+
 
   // SPARQL query to fetch village data from Wikidata
   var sparqlQuery = `
@@ -135,7 +141,7 @@ const languageQid = getUrlParameter('languageQid') || 'Q117707514';
 # NOTE : Seul PAU Q132671 dispose des 3 prononciations. 
 SELECT ?id ?idLabel ?audio ?audioLabel ?coord ?image
 WHERE {
-  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],oc,fr,en". }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],${iso2local},${iso2macro},en". }
   
   # Audios using CONTAINS or STRSTARTS
   ?id wdt:P443 ?audio.
@@ -166,7 +172,7 @@ WHERE {
         // You can add audio URLs here if needed
       }));
 
-      var map = L.map('map').setView([42.9, -0.3], 9);
+      var map = L.map('map').setView([lat, long], zoom);
       var customIcon = L.divIcon({
         className: 'custom-div-icon',
         html: '<svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="#80008088" stroke="#400080FF" /></svg>',
@@ -208,8 +214,7 @@ WHERE {
          var audioURL = 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q14185_%28oci%29-Univ%C3%B2c64-Lobi%C3%A8r_de_Haut.wav/LL-Q14185_%28oci%29-Univ%C3%B2c64-Lobi%C3%A8r_de_Haut.wav.mp3'
           let filepath = village.audio;
           console.log("Filepath village.audio", filepath)
-          let filename = pathToFilename(escape(filepath));
-          let filepathMp3 = commonsFileUrl(filename,'mp3');
+          let filepathMp3 = commonsFileUrl(pathToFilename(filepath),'mp3');
           console.log('ForEachO()',{filepathMp3});
 
          document.querySelector('#villageAudio2').innerHTML = `
