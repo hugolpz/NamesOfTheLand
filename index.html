@@ -129,11 +129,11 @@ $('.leaflet-control-attribution').replaceWith(`
 // Get languageQid from URL parameter, default to Q117707514
 const languageQid = getUrlParameter('languageQid') || 'Q117707514';
 // const areaQid= getUrlParameter('areaQid') || ''; // for Pyrennees atlantiques
-const lat = getUrlParameter('lat') || '42.9'; // for Pyrennees atlantiques
+const lat = getUrlParameter('lat') || '43.9'; // for Pyrennees atlantiques
 const lon = getUrlParameter('lon') || '-0.3'; // for Pyrennees atlantiques
 const zoom= getUrlParameter('zoom') || '9'; // for Pyrennees atlantiques
-const iso2local = getUrlParameter('iso2') || 'oc';
-const iso2macro = getUrlParameter('iso2') || 'fr';
+const iso2local = getUrlParameter('iso2local') || 'oc';
+const iso2macro = getUrlParameter('iso2macro') || 'fr';
 
 
   // SPARQL query to fetch village data from Wikidataoc
@@ -173,7 +173,7 @@ WHERE {
         // You can add audio URLs here if needed
       }));
 
-      var map = L.map('map').setView([lat, long], zoom);
+      var map = L.map('map').setView([lat, lon], zoom);
       var customIcon = L.divIcon({
         className: 'custom-div-icon',
         html: '<svg width="12" height="12"><circle cx="6" cy="6" r="6" fill="#80008088" stroke="#400080FF" /></svg>',
