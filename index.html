@@ -128,6 +128,7 @@ $('.leaflet-control-attribution').replaceWith(`
 
 // Get languageQid from URL parameter, default to Q117707514
 const languageQid = getUrlParameter('languageQid') || 'Q117707514';
+// const areaQid= getUrlParameter('areaQid') || ''; // for Pyrennees atlantiques
 const lat = getUrlParameter('lat') || '42.9'; // for Pyrennees atlantiques
 const lon = getUrlParameter('lon') || '-0.3'; // for Pyrennees atlantiques
 const zoom= getUrlParameter('zoom') || '9'; // for Pyrennees atlantiques
@@ -135,7 +136,7 @@ const iso2local = getUrlParameter('iso2') || 'oc';
 const iso2macro = getUrlParameter('iso2') || 'fr';
 
 
-  // SPARQL query to fetch village data from Wikidata
+  // SPARQL query to fetch village data from Wikidataoc
   var sparqlQuery = `
 #defaultView:Map
 # NOTE : Seul PAU Q132671 dispose des 3 prononciations. 
