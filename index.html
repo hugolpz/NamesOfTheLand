@@ -35,9 +35,7 @@
 </div>
 -->
 <div id="map" style="height: 700px;"></div>
-<!-- 
-Soudwave Codepen : https://codepen.io/hugolpz/pen/eYoKaBj
-
+<!-- Soudwave Codepen : https://codepen.io/hugolpz/pen/eYoKaBj -->
 <!-- Bootstrap Modal -->
 <div class="modal fade" id="villageModal" tabindex="-1" role="dialog" aria-labelledby="villageModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -126,14 +124,14 @@ $('.leaflet-control-attribution').replaceWith(`
   var sparqlQuery = `
 #defaultView:Map
 # NOTE : Seul PAU Q132671 dispose des 3 prononciations. 
-SELECT ?id ?idLabel ?audio_ocw ?audio_ocwLabel ?coord ?image
+SELECT ?id ?idLabel ?audio ?audioLabel ?coord ?image
 WHERE {
   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],oc,fr,en". }
   
   # Audios using CONTAINS or STRSTARTS
-  ?id wdt:P443 ?audio_ocw.
+  ?id wdt:P443 ?audio.
   
-  FILTER(CONTAINS(STR(?audio_ocw), "LL-Q117707514")) # occitan Sifflé -Q117707514
+  FILTER(CONTAINS(STR(?audio), "LL-Q117707514")) # occitan Sifflé -Q117707514
   
   # OTHERS
   OPTIONAL { ?id wdt:P1082 ?population . }
@@ -154,7 +152,7 @@ WHERE {
         toponym: item.idLabel.value,
         lon: parseFloat(item.coord.value.split(' ')[0].replace('Point\(','') ),
         lat: parseFloat(item.coord.value.split(' ')[1].replace(')','') ),
-        audio:  item.audio_ocwLabel.value,
+        audio:  item.audioLabel.value,
         image:  item.image? item.image.value:''
         // You can add audio URLs here if needed
       }));
