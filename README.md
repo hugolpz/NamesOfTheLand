@@ -41,17 +41,18 @@ See also [./about.html](https://hugolpz.github.io/NamesOfTheLand/about.html)
 Skills :
 - Wikidata / SPARQL (basic)
 - Lingualibre recording
-- Github (basic)
-- Text editing
+- Text editing for the words
+- URL editing, for parameters
 
 Variables :
-- ISO of your labels language (ex: `oc`)
-- Wikidata Qid of your language (ex: `Occitan whistled from Aas (Q117707514)`)
-- Wikidata Qid of your target administrative area (ex: `Pyrénées-Atlantiques (Q12703)`)
-- Wikimedia Commons prefix for your language (ex: `LL-Q117707514`)
-- Latitude of OSM map view's center (ex: `44.2`)
-- Longitude of OSM map view's center (ex: `-0.3`)
-- Zoom altitude of OSM map view (ex: `11`)
+- `iso2local`: filter label via ISO_639-2 language code, ex: `oc`.
+- `iso2macro`: filter label via ISO_639-2 language code, ex: `fr`.
+- `languageQid`: Wikidata Qid of your language (ex: `Occitan whistled from Aas (Q117707514)`)
+  - Helps create the Wikimedia Commons prefix for your language (ex: `LL-Q117707514`)
+- `areaQid`: Wikidata Qid of your target administrative area (ex: `Pyrénées-Atlantiques (Q12703)`)
+- `lat`: Latitude of OSM map view's center (ex: `44.2`)
+- `lon`: Longitude of OSM map view's center (ex: `-0.3`)
+- `zoom`: Zoom altitude of OSM map view (ex: `9`)
 
 ### Recording toponyms
 1. Open [Wikidata Query service](https://query.wikidata.org/), input the following SPARQL
@@ -102,9 +103,10 @@ WHERE {
 Within a week or two, these toponyms recordings will be added to their Wikidata concepts.
 
 ### Hack the map
-1. Open `index.html`
-  1. Replace `oc` and `ocw` by your ISO
-  2. Replace `Q117707514` by your language ISO or Wikidata Qid, depending on your [audio filenames prefix within Wikimedia Commons LinguaLibre's categories](https://commons.wikimedia.org/wiki/Category:Lingua_Libre_pronunciation)
+1. Ensure you recorded your toponyms via Lingua Libre. (Check your audios [in Wikimedia Commons LinguaLibre's categories](https://commons.wikimedia.org/wiki/Category:Lingua_Libre_pronunciation))
+2. Wait 2~3 weeks so the audios spread on wikidata items
+3. Open [index.html](./index.html?lat=44.2&lon=-0.3&zoom=9&iso2local=oc&iso2macro=fr&languageQid=Q117707514&areaQid=Q12703)
+4. Update the parameters to fit your case
 
 ## Licences
 - MIT Licence for code
