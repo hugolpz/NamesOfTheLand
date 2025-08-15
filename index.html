@@ -59,6 +59,12 @@
 
 <script type="module" >
 /* ****** */
+// Function to get URL parameters
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
 function commonsFileUrl(filename, fileFormat = null, width = 0) {
     const hashedFilename = CryptoJS.MD5(filename).toString();
     const baseUrl = "https://upload.wikimedia.org/wikipedia/commons";
@@ -120,6 +126,9 @@ $('.leaflet-control-attribution').replaceWith(`
 };
 
 
+// Get languageQid from URL parameter, default to Q117707514
+const languageQid = getUrlParameter('languageQid') || 'Q117707514';
+
   // SPARQL query to fetch village data from Wikidata
   var sparqlQuery = `
 #defaultView:Map
@@ -131,7 +140,7 @@ WHERE {
   # Audios using CONTAINS or STRSTARTS
   ?id wdt:P443 ?audio.
   
-  FILTER(CONTAINS(STR(?audio), "LL-Q117707514")) # occitan Sifflé -Q117707514
+  FILTER(CONTAINS(STR(?audio), "LL-${languageQid}")) # dynamic language QID
   
   # OTHERS
   OPTIONAL { ?id wdt:P1082 ?population . }
@@ -262,4 +271,4 @@ https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28
 
 </body>
 </html>
-  
+
