@@ -73,22 +73,22 @@ function pathToFilename(filepath){
 var data = [{
     toponymLanguageLocal: 'Artés d\'Anson',
     audio:'',
-    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3'
+    filepathMp3: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3'
   },
   {
     toponymLanguageLocal: 'Lobier de Baish',
     audio:'',
-    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3'
+    filepathMp3: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3'
   },
   {
     toponymLanguageLocal: 'Artés d\'Anson',
     audio:'',
-    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3'
+    filepathMp3: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/a/a1/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Art%C3%A9s_d%27Asson.wav.mp3'
   },
   {
     toponymLanguageLocal: 'Lobier de Baish',
     audio:'',
-    fullurl: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3'
+    filepathMp3: 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/0b/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav/LL-Q117707514_%28oci-whistled%29-Univ%C3%B2c64-Lobier_de_Baish.wav.mp3'
   },
 ];
 
@@ -122,8 +122,8 @@ return `<li  id="${item.toponymLanguageLocal.replace(/[ ']/g,'_')}" class="list-
       <h5 class="mb-1 audio-title">${item.toponymLanguageLocal}</h5>
      <!-- <small class="text-muted">(fr: ${item.toponymLanguageMacro})</small> -->
     </div>
-    <!-- <audio controls src="${item.fullurl}"></audio> -->
-    <wave-audio-path-player src="${item.fullurl}" wave-width="200" wave-height="40" color="#55007f" wave-color="#55007f" wave-progress-color="#ff00ff" wave-slider="#ffaaff" wave-options='{"samples":40,"type":"steps","width":192,"height":40}'></wave-audio-path-player>
+    <!-- <audio controls src="${item.filepathMp3}"></audio> -->
+    <wave-audio-path-player src="${item.filepathMp3}" wave-width="200" wave-height="40" color="#55007f" wave-color="#55007f" wave-progress-color="#ff00ff" wave-slider="#ffaaff" wave-options='{"samples":40,"type":"steps","width":192,"height":40}'></wave-audio-path-player>
   </li>`
   };
 
@@ -135,10 +135,10 @@ return `<li  id="${item.toponymLanguageLocal.replace(/[ ']/g,'_')}" class="list-
       console.log(data)
       var clean = arr.filter(item => item.coord.value.includes("Point("));
       var villagesData = clean.map(item => ({
-        toponymLanguageLocal: item.idLabel.value,
-        toponymLanguageMacro: item.idLabel.value,
+        toponymLanguageLocal: item.idLabel.value, // Ex: Occitan toponym
+        toponymLanguageMacro: item.idLabel.value, // Ex: French toponym
         audio:  item.audioLabel.value,
-        fullurl: commonsFileUrl(pathToFilename(item.audioLabel.value), 'mp3')
+        filepathMp3: commonsFileUrl(pathToFilename(item.audioLabel.value), 'mp3')
       }));
 
       villagesData.forEach(function(item) {
