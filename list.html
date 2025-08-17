@@ -110,8 +110,14 @@ function filterList() {
         ""
       ).toLowerCase();
       const match = !q || title.includes(q) || audio.includes(q);
-      li.style.display = match ? "true" : "none";
+      li.style.display = match ? "" : "none";
     });
+}
+
+function updatePlaceholderVisibility() {
+  if (!listEl || !placeholder) return;
+  const realItems = listEl.querySelectorAll('li:not(#audio-list-placeholder)').length;
+  placeholder.style.display = realItems > 0 ? "none" : "";
 }
 
 // --- Sample data ---
@@ -214,12 +220,6 @@ fetch(
   // Manage placeholder visibility (hide when list has real items)
   const listEl = document.getElementById("audio-list");
   const placeholder = document.getElementById("audio-list-placeholder");
-
-  function updatePlaceholderVisibility() {
-    if (!listEl || !placeholder) return;
-    const realItems = listEl.querySelectorAll('li:not(#audio-list-placeholder)').length;
-    placeholder.style.display = realItems > 0 ? "none" : "";
-  }
 
   // Re-run filter and update placeholder when items are added dynamically
   if (listEl) {
