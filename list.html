@@ -33,6 +33,9 @@
       </div>
       <ul id="audio-list" class="list-group">
         <!-- Audio items will be dynamically added here -->
+        <li id="audio-list-placeholder" class="list-group-item text-muted">
+          Aucun élément audio. Essayez une recherche ou attendez le chargement.
+        </li>
       </ul>
     </div>
 
@@ -107,7 +110,7 @@ function filterList() {
         ""
       ).toLowerCase();
       const match = !q || title.includes(q) || audio.includes(q);
-      li.style.display = match ? "" : "none";
+      li.style.display = match ? "true" : "none";
     });
 }
 
@@ -208,19 +211,33 @@ fetch(
     timeout = setTimeout(filterList, 150);
   });
 
-  // Re-run filter when items are added dynamically (e.g. after fetch)
+  // Manage placeholder visibility (hide when list has real items)
   const listEl = document.getElementById("audio-list");
-  if (listEl) {
-    new MutationObserver(() => filterList()).observe(listEl, {
-      childList: true,
-    });
+  const placeholder = document.getElementById("audio-list-placeholder");
+
+  function updatePlaceholderVisibility() {
+    if (!listEl || !placeholder) return;
+    const realItems = listEl.querySelectorAll('li:not(#audio-list-placeholder)').length;
+    placeholder.style.display = realItems > 0 ? "none" : "";
   }
 
-  // Run initial filter once so prefilled search is applied immediately
+  // Re-run filter and update placeholder when items are added dynamically
+  if (listEl) {
+    new MutationObserver(() => {
+      updatePlaceholderVisibility();
+      filterList();
+    }).observe(listEl, { childList: true });
+  }
+
+  // Run initial filter and placeholder update so prefilled search is applied immediately
+  updatePlaceholderVisibility();
   filterList();
 
   // Expose for manual calls/debugging
-  window.updateListFilter = filterList;
+  window.updateListFilter = () => {
+    updatePlaceholderVisibility();
+    filterList();
+  };
 })();
 </script>
 
